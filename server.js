@@ -96,6 +96,7 @@ app.post('/orders', (request, response) => {
 app.post('/orders/:id/finish', (request, response) => {
   Order.findByIdAndUpdate(request.params.id, { finishedDate: new Date()}, (error, order) => {
     if (error) throw error;
+    io.emit('update', {newOrder: 'new order has been finished'});
     response.send(order);
   })
 });
